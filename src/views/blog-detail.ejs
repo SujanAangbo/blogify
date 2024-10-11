@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("partials/head") %>
+        <title>Home Page</title>
+        <style>
+            h5 h6 img {
+                display: inline;
+            }
+        </style>
+</head>
+
+<body>
+
+    <%- include("partials/navbar") %>
+
+        <!-- Blog Details -->
+
+        <div class="container m-4">
+            <h5 class="card-title mb-3">
+                <%= blog.title %>
+            </h5>
+            <p> - by <%= blog.author.fullname %>
+            </p>
+            <img src="<%= blog.coverImage %>" class="img-fluid mb-2" width="800px" height="400px">
+            <pre><%= blog.description %></pre>
+        </div>
+
+        <!-- Comment Section -->
+
+        <form class="container mt-4 mb-4" method="post" action="/blog/comment/<%= locals.blog._id %>">
+            <h4 class="mb-2">Comments: (<%= locals.comments.length %>)</h4>
+
+            <% locals.comments.forEach(comment=> { %>
+                <div class="d-flex">
+                    <img src="<%= comment.author.profileImage %>" class="rounded-circle border me-2" alt="Bootstrap"
+                        height="30px" width="30px">
+                    <h6 class="me-3">
+                        <%= comment.author.fullname %>:
+                    </h6>
+                </div>
+
+                <p>
+                    <%= comment.content %>
+                </p>
+
+
+                <% }) %>
+
+                    <% if (user) { %>
+                        <div>
+                            <label for="email" class="form-label">Write Your Comment: </label>
+                            <input type="text" class="form-control" id="content" name="content">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                        <% } %>
+
+
+        </form>
+
+
+
+
+        <%- include("partials/scripts") %>
+
+</body>
+
+</html>
